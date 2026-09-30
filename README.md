@@ -1,28 +1,28 @@
-# TranscribeBot — локальная транскрибация аудио и видео
+# TranscribeBot — Local Audio and Video Transcription
 
-Приложение для Windows на Python и OpenAI Whisper: превращает записи в текст и субтитры. Есть графический интерфейс на Tkinter и запуск из командной строки.
+A Windows application built with Python and OpenAI Whisper that turns audio and video recordings into text and subtitles. Includes a Tkinter desktop interface and a command-line tool.
 
-## Возможности
+## Features
 
-- Обработка нескольких файлов через графический интерфейс.
-- Модели tiny, base, small, medium и large-v3.
-- Автоопределение языка, русский и английский в настройках интерфейса.
-- Экспорт TXT, DOCX и SRT через интерфейс; TXT и SRT через консоль.
-- Выбор папки сохранения и журнал обработки.
-- Отмена очереди после завершения текущего файла.
+- Batch processing of multiple files through the desktop interface.
+- Support for tiny, base, small, medium, and large-v3 models.
+- Automatic language detection, with Russian and English options in the interface.
+- TXT, DOCX, and SRT export through the interface; TXT and SRT through the command line.
+- Custom output directory and a processing log.
+- Queue cancellation after the current file finishes.
 
-Распознавание выполняется локально. При первом использовании модели нужен интернет для загрузки её весов; записи приложение не отправляет в облачный API.
+Transcription runs locally. An internet connection is required to download model weights on first use; the application does not send recordings to a cloud API.
 
-## Установка на Windows
+## Installation on Windows
 
-Рекомендуется Python 3.12 (с поддержкой Tkinter) и FFmpeg в PATH.
-Установить FFmpeg можно командой:
+Python 3.12 with Tkinter support and FFmpeg available in PATH are recommended.
+Install FFmpeg with:
 
 ```powershell
 winget install --id Gyan.FFmpeg --exact
 ```
 
-После установки откройте новый терминал и проверьте `ffmpeg -version`.
+After installation, open a new terminal and verify it with `ffmpeg -version`.
 
 ```powershell
 git clone https://github.com/yarakrot/transcribebot.git
@@ -32,43 +32,43 @@ py -3.12 -m venv venv
 .\venv\Scripts\python.exe -m pip install -r requirements.txt
 ```
 
-Whisper устанавливает PyTorch как зависимость. Для ускорения на совместимой NVIDIA GPU может потребоваться подходящая сборка PyTorch: https://pytorch.org/get-started/locally/.
+Whisper installs PyTorch as a dependency. Acceleration on a compatible NVIDIA GPU may require an appropriate PyTorch build: [PyTorch installation guide](https://pytorch.org/get-started/locally/).
 
-## Графический интерфейс
+## Desktop Interface
 
-Запустите `whisper-ui.bat` двойным щелчком или выполните:
+Double-click `whisper-ui.bat` or run:
 
 ```powershell
 .\venv\Scripts\python.exe gui.py
 ```
 
-Добавьте записи, выберите модель, язык, форматы и нажмите «Начать транскрибацию». Без выбранной папки результаты сохраняются рядом с исходной записью. Для первого запуска на CPU попробуйте tiny или base; по умолчанию выбрана medium.
+The interface is currently in Russian. Add recordings, choose a model, language, and output formats, then click “Начать транскрибацию” (Start transcription). If no output directory is selected, results are saved next to the original recording. For an initial CPU run, try tiny or base; the default model is medium.
 
-## Командная строка
+## Command Line
 
 ```powershell
 .\transcribe.bat "C:\Recordings\meeting.mp4" base
 ```
 
-Второй аргумент — модель; без него используется medium. Язык определяется автоматически. Рядом с записью создаются `meeting.txt` и `meeting.srt`.
+The second argument selects the model; medium is used if omitted. The language is detected automatically. The tool creates `meeting.txt` and `meeting.srt` next to the recording.
 
-## Ограничения
+## Limitations
 
-- Скорость зависит от модели, длины записи и оборудования; большие модели требуют больше памяти.
-- Прогресс в интерфейсе показывает количество обработанных файлов.
-- Отмена не прерывает распознавание текущего файла.
-- Файлы результатов с совпадающими именами перезаписываются; в общей папке используйте уникальные имена записей.
-- Качество текста зависит от записи; проверяйте имена, числа и важные формулировки вручную.
+- Processing speed depends on the model, recording length, and hardware; larger models require more memory.
+- The progress bar tracks the number of processed files.
+- Cancellation does not interrupt transcription of the current file.
+- Output files with matching names are overwritten; use unique recording names when saving to a shared directory.
+- Transcription quality depends on the recording; review names, numbers, and important wording manually.
 
-## Структура проекта
+## Project Structure
 
-- `gui.py` — интерфейс, очередь и экспорт результатов.
-- `transcribe.py` — консольная транскрибация.
-- `whisper-ui.bat`, `transcribe.bat` — запуск на Windows.
-- `requirements.txt` — прямые зависимости.
+- `gui.py` — desktop interface, processing queue, and output export.
+- `transcribe.py` — command-line transcription.
+- `whisper-ui.bat`, `transcribe.bat` — Windows launchers.
+- `requirements.txt` — direct dependencies.
 
-Виртуальное окружение, записи и результаты транскрибации исключены из Git через `.gitignore`.
+The virtual environment, recordings, and transcription outputs are excluded from Git through `.gitignore`.
 
-## Лицензия
+## License
 
-MIT — см. [LICENSE](LICENSE). Whisper, PyTorch и другие зависимости распространяются по собственным лицензиям.
+MIT — see [LICENSE](LICENSE). Whisper, PyTorch, and other dependencies are distributed under their own licenses.
